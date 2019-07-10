@@ -42,6 +42,11 @@ main {
 
 .cell {
   border: 1px solid #777;
+  cursor: pointer;
+}
+
+.selected {
+  background: #ffe1c4;
 }
 
 .set-cell {
@@ -52,16 +57,23 @@ main {
 
 .definite-cell {
   color: #0000fa;
-  font-size: 45px;
+  font-size: 2.9rem;
   text-align: center;
 }
 
 .possibles-cell {
   padding: 5px;
   color: #616161;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .panel {
   flex: 1;
+  padding: 2em;
+}
+
+.panel button {
+  font-size: 2rem;
+  padding: 0.5em;
+  margin: 0.1em;
 }
