@@ -28,7 +28,7 @@ header h1 {
 main {
   margin-left: 2em;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .board {
@@ -67,11 +67,19 @@ main {
   font-size: 0.9rem;
 }
 
+.candidates-cell {
+  padding-top: calc(30px - 0.5rem);
+  color: #616161;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .panel {
+  border: 1px solid red;
+
   align-self: start;
-  justify-self: start;
   display: grid;
-  grid-gap: 0.2rem;
+  grid-gap: 0.3rem;
   grid-template-columns: 2fr 1fr 1fr 1fr;
 
   padding: 0 2em;
@@ -95,7 +103,7 @@ main {
   font-size: 2.5rem;
 }
 
-.panel .possible-button {
+.panel .possibles-button {
   color: #616161;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }

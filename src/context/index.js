@@ -12,8 +12,8 @@ export const BoardProvider = ({ children }) => {
       emptyBoard[i] = {
         selected: false,
         definite: '',
-        possibles: '',
-        candidates: '',
+        possibles: [],
+        candidates: [],
       };
 
       setBoard(emptyBoard);
@@ -42,6 +42,9 @@ export const BoardProvider = ({ children }) => {
 
   const setDefinite = value => {
     const selection = getSelection();
+
+    if (selection.length === 0) return;
+
     const newBoard = board.slice(0);
 
     selection.forEach(idx => (newBoard[idx].definite = value));
@@ -50,27 +53,43 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setPossibles = value => {
+    const selection = getSelection();
+
+    if (selection.length === 0) return;
+
+    const newBoard = board.slice(0);
     value = String(value);
 
-    const selection = getSelection();
-    const newBoard = board.slice(0);
+    selection.forEach(index => {
+      const cell = newBoard[index];
+      const idx = cell.possibles.indexOf(value);
 
-    // selection.forEach(index => {
-    //   if(newBoard[index].possibles.include)
-    // });
+      if (idx > -1) cell.possibles.splice(idx, 1);
+      else cell.possibles.push(value);
+
+      cell.possibles.sort();
+    });
 
     setBoard(newBoard);
   };
 
   const setCandidates = value => {
+    const selection = getSelection();
+
+    if (selection.length === 0) return;
+
+    const newBoard = board.slice(0);
     value = String(value);
 
-    const selection = getSelection();
-    const newBoard = board.slice(0);
+    selection.forEach(index => {
+      const cell = newBoard[index];
+      const idx = cell.candidates.indexOf(value);
 
-    // selection.forEach(index => {
-    //   if(newBoard[index].possibles.include)
-    // });
+      if (idx > -1) cell.candidates.splice(idx, 1);
+      else cell.candidates.push(value);
+
+      cell.candidates.sort();
+    });
 
     setBoard(newBoard);
   };

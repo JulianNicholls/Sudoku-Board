@@ -11,19 +11,18 @@ const Panel = () => {
 
   const setNumber = e => {
     const value = e.target.innerText;
-    console.log({ value });
 
     switch (mode) {
       case SET:
-        setDefinite(e.target.innerText);
+        setDefinite(value);
         break;
 
       case POSSIBLES:
-        setPossibles(e.target.innerText);
+        setPossibles(value);
         break;
 
       case CANDIDATES:
-        setCandidates(e.target.innerText);
+        setCandidates(value);
         break;
 
       default:
@@ -31,42 +30,44 @@ const Panel = () => {
     }
   };
 
+  const numberClass = mode === SET ? 'definite-button' : 'possibles-button';
+
   return (
     <div className="panel">
       <button className="mode-button" onClick={() => setMode(SET)}>
         Set
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         1
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         2
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         3
       </button>
       <button className="mode-button" onClick={() => setMode(POSSIBLES)}>
         Corner
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         4
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         5
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         6
       </button>
       <button className="mode-button" onClick={() => setMode(CANDIDATES)}>
         Middle
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         7
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         8
       </button>
-      <button className="definite-button" onClick={setNumber}>
+      <button className={numberClass} onClick={setNumber}>
         9
       </button>
     </div>

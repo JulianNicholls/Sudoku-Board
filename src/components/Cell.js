@@ -19,9 +19,12 @@ const Cell = ({
   } else if (definite) {
     klass += 'definite-cell';
     content = definite;
-  } else if (possibles) {
+  } else if (possibles.length > 0) {
     klass += 'possibles-cell';
-    content = possibles;
+    content = possibles.join('');
+  } else if (candidates.length > 0) {
+    klass += 'candidates-cell';
+    content = candidates.join('');
   }
 
   return (
