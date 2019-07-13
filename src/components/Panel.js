@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react';
+
 import { BoardContext } from '../context';
+
+import ModeButton from './ModeButton';
 
 const SET = 0;
 const POSSIBLES = 1;
@@ -34,9 +37,9 @@ const Panel = () => {
 
   return (
     <div className="panel">
-      <button className="mode-button" onClick={() => setMode(SET)}>
+      <ModeButton selected={mode === SET} clicked={() => setMode(SET)}>
         Set
-      </button>
+      </ModeButton>
       <button className={numberClass} onClick={setNumber}>
         1
       </button>
@@ -46,9 +49,12 @@ const Panel = () => {
       <button className={numberClass} onClick={setNumber}>
         3
       </button>
-      <button className="mode-button" onClick={() => setMode(POSSIBLES)}>
+      <ModeButton
+        selected={mode === POSSIBLES}
+        clicked={() => setMode(POSSIBLES)}
+      >
         Corner
-      </button>
+      </ModeButton>
       <button className={numberClass} onClick={setNumber}>
         4
       </button>
@@ -58,9 +64,12 @@ const Panel = () => {
       <button className={numberClass} onClick={setNumber}>
         6
       </button>
-      <button className="mode-button" onClick={() => setMode(CANDIDATES)}>
+      <ModeButton
+        selected={mode === CANDIDATES}
+        clicked={() => setMode(CANDIDATES)}
+      >
         Middle
-      </button>
+      </ModeButton>
       <button className={numberClass} onClick={setNumber}>
         7
       </button>

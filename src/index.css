@@ -45,7 +45,7 @@ main {
   cursor: pointer;
 }
 
-.selected {
+.selected-cell {
   background: #ffe1c4;
 }
 
@@ -75,8 +75,6 @@ main {
 }
 
 .panel {
-  border: 1px solid red;
-
   align-self: start;
   display: grid;
   grid-gap: 0.3rem;
@@ -87,6 +85,7 @@ main {
 }
 
 .panel button {
+  border-radius: 0.25em;
   height: 4rem;
   line-height: 4rem;
   text-align: center;
@@ -96,6 +95,10 @@ main {
 .panel .mode-button {
   font-size: 1.8rem;
   width: 8rem;
+}
+
+.panel .mode-button.selected {
+  background: #66cd66;
 }
 
 .panel .definite-button {

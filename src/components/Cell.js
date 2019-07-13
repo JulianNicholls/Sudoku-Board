@@ -10,7 +10,7 @@ const Cell = ({
   bg,
   candidates,
 }) => {
-  let klass = selected ? 'cell selected ' : 'cell ';
+  let klass = selected ? 'cell selected-cell ' : 'cell ';
   let content = '';
 
   if (set) {
