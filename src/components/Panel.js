@@ -1,22 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
-import { BoardContext } from '../context';
+import { useBoard } from '../context';
 
 import ModeButton from './ModeButton';
 
-const SET = 0;
+const NORMAL = 0;
 const POSSIBLES = 1;
 const CANDIDATES = 2;
 
 const Panel = () => {
-  const { setDefinite, setPossibles, setCandidates } = useContext(BoardContext);
-  const [mode, setMode] = useState(SET);
+  const { setDefinite, setPossibles, setCandidates, emptyCell } = useBoard();
+  const [mode, setMode] = useState(NORMAL);
 
   const setNumber = e => {
     const value = e.target.innerText;
 
     switch (mode) {
-      case SET:
+      case NORMAL:
         setDefinite(value);
         break;
 
@@ -33,51 +33,57 @@ const Panel = () => {
     }
   };
 
-  const numberClass = mode === SET ? 'definite-button' : 'possibles-button';
+  const klass = mode === NORMAL ? 'definite-button' : 'possibles-button';
 
   return (
     <div className="panel">
-      <ModeButton selected={mode === SET} clicked={() => setMode(SET)}>
-        Set
+      <ModeButton selected={mode === NORMAL} clicked={() => setMode(NORMAL)}>
+        Normal
       </ModeButton>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         1
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         2
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         3
       </button>
+
       <ModeButton
         selected={mode === POSSIBLES}
         clicked={() => setMode(POSSIBLES)}
       >
         Corner
       </ModeButton>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         4
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         5
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         6
       </button>
+
       <ModeButton
         selected={mode === CANDIDATES}
         clicked={() => setMode(CANDIDATES)}
       >
-        Middle
+        Centre
       </ModeButton>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         7
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         8
       </button>
-      <button className={numberClass} onClick={setNumber}>
+      <button className={klass} onClick={setNumber}>
         9
+      </button>
+
+      <button className="function-button" onClick={emptyCell}>
+        Delete
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-export const BoardContext = React.createContext();
+const BoardContext = React.createContext();
 
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState([]);
@@ -58,7 +58,6 @@ export const BoardProvider = ({ children }) => {
     if (selection.length === 0) return;
 
     const newBoard = board.slice(0);
-    value = String(value);
 
     selection.forEach(index => {
       const cell = newBoard[index];
@@ -79,7 +78,6 @@ export const BoardProvider = ({ children }) => {
     if (selection.length === 0) return;
 
     const newBoard = board.slice(0);
-    value = String(value);
 
     selection.forEach(index => {
       const cell = newBoard[index];
@@ -94,13 +92,42 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
+  const emptyCell = () => {
+    const selection = getSelection();
+
+    if (selection.length === 0) return;
+
+    const newBoard = board.slice(0);
+
+    selection.forEach(index => {
+      newBoard[index] = {
+        ...newBoard[index],
+        definite: '',
+        possibles: [],
+        candidates: [],
+      };
+    });
+
+    setBoard(newBoard);
+  };
+
   const state = {
     board,
     setSelected,
     setDefinite,
     setPossibles,
     setCandidates,
+    emptyCell,
   };
 
   return <BoardContext.Provider value={state}>{children}</BoardContext.Provider>;
+};
+
+export const useBoard = () => {
+  const context = useContext(BoardContext);
+
+  if (context === undefined)
+    throw new Error('useBoard() must be used within a BoardProvider');
+
+  return context;
 };
