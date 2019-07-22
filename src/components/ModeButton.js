@@ -1,7 +1,9 @@
 import React from 'react';
 
 const ModeButton = ({ selected, children, clicked }) => {
-  const klass = selected ? 'mode-button selected' : 'mode-button';
+  let klass = 'function-button mode-button';
+
+  if (selected) klass += ' selected';
 
   return (
     <button className={klass} onClick={clicked}>

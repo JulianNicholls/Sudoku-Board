@@ -9,9 +9,12 @@ const Cell = ({
   possibles,
   bg,
   candidates,
+  border
 }) => {
-  let klass = selected ? 'cell selected-cell ' : 'cell ';
+  let klass = `cell border-${border} `;
   let content = '';
+
+  if (selected) klass += 'selected-cell ';
 
   if (set) {
     klass += 'set-cell';
