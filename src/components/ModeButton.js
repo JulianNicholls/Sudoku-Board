@@ -1,13 +1,17 @@
 import React from 'react';
 
-const ModeButton = ({ selected, children, clicked }) => {
+import { useBoard } from '../context';
+
+const ModeButton = ({ mode, text }) => {
+  const { entryMode, setEntryMode } = useBoard();
+
   let klass = 'function-button mode-button';
 
-  if (selected) klass += ' selected';
+  if (entryMode === mode) klass += ' selected';
 
   return (
-    <button className={klass} onClick={clicked}>
-      {children}
+    <button className={klass} onClick={() => setEntryMode(mode)}>
+      {text}
     </button>
   );
 };
