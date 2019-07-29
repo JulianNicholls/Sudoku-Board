@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 
 const BoardContext = React.createContext();
 
-const NORMAL = 0;
-const POSSIBLES = 1;
-const CANDIDATES = 2;
+const SET = 0;
+const NORMAL = 1;
+const POSSIBLES = 2;
+const CANDIDATES = 3;
 
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState([]);
@@ -29,10 +30,13 @@ export const BoardProvider = ({ children }) => {
     const newBoard = board.slice(0);
 
     // Clear the current selection unless adding to it.
-    // Then set the selected cell
+    // Then toggle the selected cell
     if (!addToSelection) newBoard.forEach(cell => (cell.selected = false));
 
     newBoard[index].selected = !newBoard[index].selected;
+
+    // De-select all text
+    window.getSelection().removeAllRanges();
 
     setBoard(newBoard);
   };
@@ -49,6 +53,10 @@ export const BoardProvider = ({ children }) => {
     const value = e.target.innerText;
 
     switch (entryMode) {
+      case SET:
+        setInitial(value);
+        break;
+
       case NORMAL:
         setDefinite(value);
         break;
@@ -64,6 +72,18 @@ export const BoardProvider = ({ children }) => {
       default:
         console.error('Huh?!');
     }
+  };
+
+  const setInitial = value => {
+    const selection = getSelection();
+
+    if (selection.length === 0) return;
+
+    const newBoard = board.slice(0);
+
+    selection.forEach(idx => (newBoard[idx].set = value));
+
+    setBoard(newBoard);
   };
 
   const setDefinite = value => {
@@ -159,7 +179,7 @@ export const useBoard = () => {
   const context = useContext(BoardContext);
 
   if (context === undefined)
-    throw new Error('useBoard() must be used within a BoardProvider');
+    throw new Error('useBoard() must be used within a BoardProvider block');
 
   return context;
 };

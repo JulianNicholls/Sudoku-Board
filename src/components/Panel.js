@@ -17,7 +17,7 @@ const NumberButton = ({ number }) => {
 };
 
 const Panel = () => {
-  const { NORMAL, POSSIBLES, CANDIDATES, emptyCell, entryMode } = useBoard();
+  const { NORMAL, POSSIBLES, CANDIDATES, emptyCell } = useBoard();
 
   return (
     <div className="panel">
