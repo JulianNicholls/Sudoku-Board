@@ -2,8 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 
 const BoardContext = React.createContext();
 
+const NORMAL = 0;
+const POSSIBLES = 1;
+const CANDIDATES = 2;
+
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState([]);
+  const [entryMode, setEntryMode] = useState(NORMAL);
 
   useEffect(() => {
     const emptyBoard = [];
@@ -38,6 +43,27 @@ export const BoardProvider = ({ children }) => {
 
       return indexes;
     }, []);
+  };
+
+  const setNumber = e => {
+    const value = e.target.innerText;
+
+    switch (entryMode) {
+      case NORMAL:
+        setDefinite(value);
+        break;
+
+      case POSSIBLES:
+        setPossibles(value);
+        break;
+
+      case CANDIDATES:
+        setCandidates(value);
+        break;
+
+      default:
+        console.error('Huh?!');
+    }
   };
 
   const setDefinite = value => {
@@ -112,7 +138,13 @@ export const BoardProvider = ({ children }) => {
   };
 
   const state = {
+    NORMAL,
+    POSSIBLES,
+    CANDIDATES,
     board,
+    setNumber,
+    entryMode,
+    setEntryMode,
     setSelected,
     setDefinite,
     setPossibles,
