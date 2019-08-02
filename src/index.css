@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather|Montserrat&display=swap');
 
+:root {
+  --set-colour: #101010;
+  --definite-colour: #8000a0;
+  --possible-colour: #616161;
+
+  --selected-bg: #ffe1c4;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -46,30 +54,30 @@ main {
 }
 
 .selected-cell {
-  background: #ffe1c4;
+  background: var(--selected-bg);
 }
 
 .set-cell {
-  color: #101010;
+  color: var(--set-colour);
   font-size: 45px;
   text-align: center;
 }
 
 .definite-cell {
-  color: #600080;
+  color: var(--definite-colour);
   font-size: 2.9rem;
   text-align: center;
 }
 
 .possibles-cell {
   padding: 0.25rem;
-  color: #616161;
+  color: var(--possible-colour);
   font-size: 0.9rem;
 }
 
 .candidates-cell {
   padding-top: calc(30px - 0.5rem);
-  color: #616161;
+  color: var(--possible-colour);
   font-size: 0.9rem;
   text-align: center;
 }
@@ -126,12 +134,21 @@ main {
 
 .panel {
   align-self: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel1, .panel2 {
   display: grid;
   grid-gap: 0.35rem;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-
   padding: 0 2em;
   width: 24rem;
+}
+
+.panel2 {
+  margin-top: 0.35rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .panel button {

@@ -7,7 +7,7 @@ import ModeButton from './ModeButton';
 const NumberButton = ({ number }) => {
   const { entryMode, NORMAL, setNumber } = useBoard();
 
-  const klass = entryMode === NORMAL ? 'definite-button' : 'possibles-button';
+  const klass = entryMode <= NORMAL ? 'definite-button' : 'possibles-button';
 
   return (
     <button className={klass} onClick={setNumber}>
@@ -17,28 +17,33 @@ const NumberButton = ({ number }) => {
 };
 
 const Panel = () => {
-  const { NORMAL, POSSIBLES, CANDIDATES, emptyCell } = useBoard();
+  const { SET, NORMAL, POSSIBLES, CANDIDATES, emptyCell } = useBoard();
 
   return (
     <div className="panel">
-      <ModeButton mode={NORMAL} text={'Normal'} />
-      <NumberButton number={1} />
-      <NumberButton number={2} />
-      <NumberButton number={3} />
+      <div className="panel1">
+        <ModeButton mode={NORMAL} text={'Normal'} />
+        <NumberButton number={1} />
+        <NumberButton number={2} />
+        <NumberButton number={3} />
 
-      <ModeButton mode={POSSIBLES} text={'Corner'} />
-      <NumberButton number={4} />
-      <NumberButton number={5} />
-      <NumberButton number={6} />
+        <ModeButton mode={POSSIBLES} text={'Corner'} />
+        <NumberButton number={4} />
+        <NumberButton number={5} />
+        <NumberButton number={6} />
 
-      <ModeButton mode={CANDIDATES} text={'Centre'} />
-      <NumberButton number={7} />
-      <NumberButton number={8} />
-      <NumberButton number={9} />
+        <ModeButton mode={CANDIDATES} text={'Centre'} />
+        <NumberButton number={7} />
+        <NumberButton number={8} />
+        <NumberButton number={9} />
+      </div>
 
-      <button className="function-button" onClick={emptyCell}>
-        Delete
-      </button>
+      <div className="panel2">
+        <ModeButton mode={SET} text={'Set'} />
+        <button className="function-button" onClick={emptyCell}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

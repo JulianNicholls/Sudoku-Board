@@ -17,6 +17,7 @@ export const BoardProvider = ({ children }) => {
     for (let i = 0; i < 81; ++i) {
       emptyBoard[i] = {
         selected: false,
+        set: '',
         definite: '',
         possibles: [],
         candidates: [],
@@ -158,6 +159,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const state = {
+    SET,
     NORMAL,
     POSSIBLES,
     CANDIDATES,

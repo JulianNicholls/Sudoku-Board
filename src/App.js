@@ -4,17 +4,21 @@ import Panel from './components/Panel';
 import { BoardProvider } from './context';
 
 function App() {
+  const onKey = e => {
+    console.log(e.key);
+  };
+
   return (
     <BoardProvider>
-    <div className="App">
-      <header className="App-header">
-        <h1>Judoku</h1>
-      </header>
-      <main>
-        <Board />
-        <Panel />
-      </main>
-    </div>
+      <div className="App" tabIndex="0" onKeyDown={onKey}>
+        <header className="App-header">
+          <h1>Judoku</h1>
+        </header>
+        <main>
+          <Board />
+          <Panel />
+        </main>
+      </div>
     </BoardProvider>
   );
 }
