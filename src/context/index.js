@@ -51,13 +51,13 @@ export const BoardProvider = ({ children }) => {
       else if (key === 'ArrowRight' && selection % 9 !== 8) delta = 1;
       else if (key === 'ArrowLeft' && selection % 9 !== 0) delta = -1;
 
-      console.log({ delta });
-
       if (delta) {
         newBoard.forEach(cell => (cell.selected = false));
         newBoard[selection + delta].selected = true;
         setBoard(newBoard);
       }
+    } else if (NUMERALS.includes(key)) {
+      setNumber(key);
     }
   };
 
@@ -77,7 +77,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setNumber = e => {
-    const value = e.target.innerText;
+    const value = e.target ? e.target.innerText : e;
 
     switch (entryMode) {
       case SET:
