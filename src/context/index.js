@@ -22,10 +22,16 @@ export const BoardProvider = ({ children }) => {
         possibles: [],
         candidates: [],
       };
-
-      setBoard(emptyBoard);
     }
+
+    emptyBoard[0].selected = true;
+
+    setBoard(emptyBoard);
   }, []);
+
+  const keyDownHandler = e => {
+    console.log(e.key);
+  };
 
   const setSelected = (index, addToSelection) => {
     const newBoard = board.slice(0);
@@ -40,14 +46,6 @@ export const BoardProvider = ({ children }) => {
     window.getSelection().removeAllRanges();
 
     setBoard(newBoard);
-  };
-
-  const getSelection = () => {
-    return board.reduce((indexes, cell, idx) => {
-      if (cell.selected) indexes.push(idx);
-
-      return indexes;
-    }, []);
   };
 
   const setNumber = e => {
@@ -158,11 +156,20 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
+  const getSelection = () => {
+    return board.reduce((indexes, cell, idx) => {
+      if (cell.selected) indexes.push(idx);
+
+      return indexes;
+    }, []);
+  };
+
   const state = {
     SET,
     NORMAL,
     POSSIBLES,
     CANDIDATES,
+    keyDownHandler,
     board,
     setNumber,
     entryMode,
