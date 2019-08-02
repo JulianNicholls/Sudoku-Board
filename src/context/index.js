@@ -7,6 +7,9 @@ const NORMAL = 1;
 const POSSIBLES = 2;
 const CANDIDATES = 3;
 
+const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+const NUMERALS = '123456789';
+
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState([]);
   const [entryMode, setEntryMode] = useState(NORMAL);
@@ -30,7 +33,32 @@ export const BoardProvider = ({ children }) => {
   }, []);
 
   const keyDownHandler = e => {
-    console.log(e.key);
+    const selections = getSelections();
+
+    if (selections.length === 0) return;
+
+    const selection = selections[0]; // Ignore other selections
+    const newBoard = board.slice(0);
+    const key = e.key;
+
+    console.log(key);
+
+    if (ARROWS.includes(key)) {
+      let delta = 0;
+
+      if (key === 'ArrowUp' && selection >= 9) delta = -9;
+      else if (key === 'ArrowDown' && selection <= 71) delta = 9;
+      else if (key === 'ArrowRight' && selection % 9 !== 8) delta = 1;
+      else if (key === 'ArrowLeft' && selection % 9 !== 0) delta = -1;
+
+      console.log({ delta });
+
+      if (delta) {
+        newBoard.forEach(cell => (cell.selected = false));
+        newBoard[selection + delta].selected = true;
+        setBoard(newBoard);
+      }
+    }
   };
 
   const setSelected = (index, addToSelection) => {
@@ -74,7 +102,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setInitial = value => {
-    const selection = getSelection();
+    const selection = getSelections();
 
     if (selection.length === 0) return;
 
@@ -86,7 +114,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setDefinite = value => {
-    const selection = getSelection();
+    const selection = getSelections();
 
     if (selection.length === 0) return;
 
@@ -98,7 +126,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setPossibles = value => {
-    const selection = getSelection();
+    const selection = getSelections();
 
     if (selection.length === 0) return;
 
@@ -118,7 +146,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setCandidates = value => {
-    const selection = getSelection();
+    const selection = getSelections();
 
     if (selection.length === 0) return;
 
@@ -138,7 +166,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const emptyCell = () => {
-    const selection = getSelection();
+    const selection = getSelections();
 
     if (selection.length === 0) return;
 
@@ -156,7 +184,7 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
-  const getSelection = () => {
+  const getSelections = () => {
     return board.reduce((indexes, cell, idx) => {
       if (cell.selected) indexes.push(idx);
 
