@@ -6,6 +6,7 @@ const SET = 0;
 const NORMAL = 1;
 const POSSIBLES = 2;
 const CANDIDATES = 3;
+const MAX_MODE = 4;
 
 const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 const NUMERALS = '123456789';
@@ -41,8 +42,6 @@ export const BoardProvider = ({ children }) => {
     const newBoard = board.slice(0);
     const key = e.key;
 
-    console.log(key);
-
     if (ARROWS.includes(key)) {
       let delta = 0;
 
@@ -56,9 +55,8 @@ export const BoardProvider = ({ children }) => {
         newBoard[selection + delta].selected = true;
         setBoard(newBoard);
       }
-    } else if (NUMERALS.includes(key)) {
-      setNumber(key);
-    }
+    } else if (NUMERALS.includes(key)) setNumber(key);
+    else if (key === ' ') setEntryMode((entryMode + 1) % MAX_MODE);
   };
 
   const setSelected = (index, addToSelection) => {
@@ -108,7 +106,9 @@ export const BoardProvider = ({ children }) => {
 
     const newBoard = board.slice(0);
 
-    selection.forEach(idx => (newBoard[idx].set = value));
+    selection.forEach(
+      idx => (newBoard[idx].set = newBoard[idx].set === value ? '' : value)
+    );
 
     setBoard(newBoard);
   };
@@ -120,7 +120,10 @@ export const BoardProvider = ({ children }) => {
 
     const newBoard = board.slice(0);
 
-    selection.forEach(idx => (newBoard[idx].definite = value));
+    selection.forEach(
+      idx =>
+        (newBoard[idx].definite = newBoard[idx].definite === value ? '' : value)
+    );
 
     setBoard(newBoard);
   };
@@ -175,6 +178,7 @@ export const BoardProvider = ({ children }) => {
     selection.forEach(index => {
       newBoard[index] = {
         ...newBoard[index],
+        set: '',
         definite: '',
         possibles: [],
         candidates: [],
