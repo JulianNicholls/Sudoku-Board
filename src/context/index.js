@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 
 const BoardContext = React.createContext();
 
-const SET = 0;
-const NORMAL = 1;
-const POSSIBLES = 2;
-const CANDIDATES = 3;
-const MAX_MODE = 4;
+const NORMAL = 0;
+const POSSIBLES = 1;
+const CANDIDATES = 2;
+const SET = 3;
+const MAX_MODE = 3;
 
 const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 const NUMERALS = '123456789';
@@ -35,9 +35,6 @@ export const BoardProvider = ({ children }) => {
 
   const keyDownHandler = e => {
     const selections = getSelections();
-
-    if (selections.length === 0) return;
-
     const selection = selections[0]; // Ignore other selections
     const newBoard = board.slice(0);
     const key = e.key;
@@ -101,9 +98,6 @@ export const BoardProvider = ({ children }) => {
 
   const setInitial = value => {
     const selection = getSelections();
-
-    if (selection.length === 0) return;
-
     const newBoard = board.slice(0);
 
     selection.forEach(
@@ -115,9 +109,6 @@ export const BoardProvider = ({ children }) => {
 
   const setDefinite = value => {
     const selection = getSelections();
-
-    if (selection.length === 0) return;
-
     const newBoard = board.slice(0);
 
     selection.forEach(
@@ -130,9 +121,6 @@ export const BoardProvider = ({ children }) => {
 
   const setPossibles = value => {
     const selection = getSelections();
-
-    if (selection.length === 0) return;
-
     const newBoard = board.slice(0);
 
     selection.forEach(index => {
@@ -150,9 +138,6 @@ export const BoardProvider = ({ children }) => {
 
   const setCandidates = value => {
     const selection = getSelections();
-
-    if (selection.length === 0) return;
-
     const newBoard = board.slice(0);
 
     selection.forEach(index => {
@@ -170,9 +155,6 @@ export const BoardProvider = ({ children }) => {
 
   const emptyCell = () => {
     const selection = getSelections();
-
-    if (selection.length === 0) return;
-
     const newBoard = board.slice(0);
 
     selection.forEach(index => {
@@ -189,11 +171,15 @@ export const BoardProvider = ({ children }) => {
   };
 
   const getSelections = () => {
-    return board.reduce((indexes, cell, idx) => {
+    const selections = board.reduce((indexes, cell, idx) => {
       if (cell.selected) indexes.push(idx);
 
       return indexes;
     }, []);
+
+    if (selections.length === 0) console.error('No selected cell');
+
+    return selections;
   };
 
   const state = {
