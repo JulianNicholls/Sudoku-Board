@@ -53,7 +53,8 @@ export const BoardProvider = ({ children }) => {
         setBoard(newBoard);
       }
     } else if (NUMERALS.includes(key)) setNumber(key);
-    else if (key === ' ') setEntryMode((entryMode + 1) % MAX_MODE);
+    else if (key === ' ' && entryMode !== SET)
+      setEntryMode((entryMode + 1) % MAX_MODE);
   };
 
   const setSelected = (index, addToSelection) => {

@@ -15,7 +15,7 @@ function App() {
       </header>
       <main>
         <Board />
-        <Panel />
+        <Panel setMode={true} />
       </main>
     </div>
   );
