@@ -171,6 +171,30 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
+  const saveBoard = (boardID = null) => {
+    let id = boardID;
+
+    if (!id) {
+      const now = Date.now();
+      id = now.toString(16);
+    }
+
+    console.log(`Saving ${id}`);
+    localStorage.setItem(`judoku-${id}`, JSON.stringify(board));
+
+    return id;
+  };
+
+  const loadBoard = id => {
+    const loaded = localStorage.getItem(`judoku-${id}`);
+
+    console.log(`loadBoard ${id}`);
+    if (loaded) {
+      console.log(`Found ${id}`);
+      setBoard(JSON.parse(loaded));
+    }
+  };
+
   const getSelections = () => {
     const selections = board.reduce((indexes, cell, idx) => {
       if (cell.selected) indexes.push(idx);
@@ -198,6 +222,8 @@ export const BoardProvider = ({ children }) => {
     setPossibles,
     setCandidates,
     emptyCell,
+    saveBoard,
+    loadBoard,
   };
 
   return <BoardContext.Provider value={state}>{children}</BoardContext.Provider>;
