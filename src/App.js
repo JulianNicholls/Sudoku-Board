@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Board from './components/Board';
@@ -16,18 +16,14 @@ const SetPage = () => {
 };
 
 const SolvePage = ({ match }) => {
-  const { loadBoard } = useBoard();
-
-  useEffect(() => {
-    console.log({ match, params: match.params, id: match.params.id });
-  }, [match]);
-
   return (
     <>
-      <Board />
+      <Board id={match.params.id} />
       <Panel />
     </>
   );
+
+  // basic1 /
 };
 
 function App() {
