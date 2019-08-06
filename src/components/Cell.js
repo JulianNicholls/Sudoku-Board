@@ -9,7 +9,7 @@ const Cell = ({
   possibles,
   bg,
   candidates,
-  border
+  border,
 }) => {
   let klass = `cell border-${border} `;
   let content = '';
@@ -22,12 +22,12 @@ const Cell = ({
   } else if (definite) {
     klass += 'definite-cell';
     content = definite;
-  } else if (possibles.length > 0) {
-    klass += 'possibles-cell';
-    content = possibles.join('');
   } else if (candidates.length > 0) {
     klass += 'candidates-cell';
     content = candidates.join('');
+  } else if (possibles.length > 0) {
+    klass += 'possibles-cell';
+    content = possibles.join('');
   }
 
   return (
