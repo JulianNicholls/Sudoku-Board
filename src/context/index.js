@@ -171,13 +171,10 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
-  const saveBoard = (boardID = null) => {
+  const saveBoard = (boardID = '') => {
     let id = boardID;
 
-    if (!id) {
-      const now = Date.now();
-      id = now.toString(16);
-    }
+    if (!id) id = Date.now().toString(16);
 
     console.log(`Saving ${id}`);
     localStorage.setItem(`judoku-${id}`, JSON.stringify(board));

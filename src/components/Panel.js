@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useBoard } from '../context';
 
@@ -17,6 +17,8 @@ const NumberButton = ({ number }) => {
 };
 
 const Panel = ({ setMode = false }) => {
+  const [boardID, setBoardID] = useState('');
+
   const {
     SET,
     NORMAL,
@@ -33,12 +35,16 @@ const Panel = ({ setMode = false }) => {
     if (setMode) setEntryMode(SET);
   }, [SET, setEntryMode, setMode]);
 
+  const save = () => {
+    setBoardID(saveBoard(boardID));
+  };
+
   return (
     <div className="panel">
       {setMode && (
         <div className="panel-set">
           <ModeButton mode={SET} text={'Set'} />
-          <button className="function-button" onClick={saveBoard}>
+          <button className="function-button" onClick={save}>
             Save
           </button>
         </div>
