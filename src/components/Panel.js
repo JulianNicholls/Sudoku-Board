@@ -30,8 +30,6 @@ const Panel = ({ setMode = false }) => {
   } = useBoard();
 
   useEffect(() => {
-    console.log('Calling sEM SET');
-
     if (setMode) setEntryMode(SET);
   }, [SET, setEntryMode, setMode]);
 

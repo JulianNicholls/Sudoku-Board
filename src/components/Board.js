@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Cell from './Cell';
 import { useBoard } from '../context';
@@ -87,12 +87,19 @@ const CORNERS = [
   '23',
 ];
 
-const Board = () => {
-  const { board, setSelected } = useBoard();
+const Board = ({ id = null }) => {
+  const { board, setSelected, loadBoard } = useBoard();
+  const [loaded, setLoaded] = useState(false);
 
   const clicked = e => {
     setSelected(e.target.dataset.index, e.shiftKey);
   };
+
+  useEffect(() => {
+    if (id && !loaded) loadBoard(id);
+
+    setLoaded(true);
+  }, [id, loadBoard, loaded]);
 
   return (
     <div className="board">
