@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 const BoardContext = React.createContext();
 
@@ -11,27 +11,23 @@ const MAX_MODE = 3;
 const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 const NUMERALS = '123456789';
 
+const EMPTY_BOARD = [];
+
+for (let i = 0; i < 81; ++i) {
+  EMPTY_BOARD[i] = {
+    selected: false,
+    set: '',
+    definite: '',
+    possibles: [],
+    candidates: [],
+  };
+}
+
+EMPTY_BOARD[0].selected = true;
+
 export const BoardProvider = ({ children }) => {
-  const [board, setBoard] = useState([]);
+  const [board, setBoard] = useState(EMPTY_BOARD);
   const [entryMode, setEntryMode] = useState(NORMAL);
-
-  useEffect(() => {
-    const emptyBoard = [];
-
-    for (let i = 0; i < 81; ++i) {
-      emptyBoard[i] = {
-        selected: false,
-        set: '',
-        definite: '',
-        possibles: [],
-        candidates: [],
-      };
-    }
-
-    emptyBoard[0].selected = true;
-
-    setBoard(emptyBoard);
-  }, []);
 
   const keyDownHandler = e => {
     const selections = getSelections();
@@ -185,9 +181,8 @@ export const BoardProvider = ({ children }) => {
   const loadBoard = id => {
     const loaded = localStorage.getItem(`judoku-${id}`);
 
-    console.log(`loadBoard ${id}`);
     if (loaded) {
-      console.log(`Found ${id}`);
+      console.log(`Loading ${id}`);
       setBoard(JSON.parse(loaded));
     }
   };
