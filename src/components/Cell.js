@@ -22,17 +22,17 @@ const Cell = ({
   } else if (definite) {
     klass += 'definite-cell';
     content = definite;
-  } else if (candidates.length > 0) {
-    klass += 'candidates-cell';
-    content = candidates.join('');
-  } else if (possibles.length > 0) {
-    klass += 'possibles-cell';
-    content = possibles.join('');
   }
 
   return (
     <div className={klass} onClick={clicked} data-index={index}>
       {content}
+      {!set && !definite && possibles && (
+        <span className="possibles possible-numbers">{possibles}</span>
+      )}
+      {!set && !definite && candidates && (
+        <div className="candidates possible-numbers">{candidates}</div>
+      )}
     </div>
   );
 };
