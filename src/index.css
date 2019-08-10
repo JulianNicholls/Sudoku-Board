@@ -10,6 +10,16 @@
   --grey-border: #777;
 
   --button-selected: #b3ffb3;
+
+  --board-size: 540px;
+
+  --large-text: 2.9rem;
+
+  --button-size: 4rem;
+  --button-large: 8rem;
+  --function-large-text: 1.8rem;
+  --button-large-text: 2.5rem;
+  --button-small-text: 1.4rem;
 }
 
 *, *::before, *::after {
@@ -48,8 +58,8 @@ main {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  height: 540px;
-  width: 540px;
+  height: var(--board-size);
+  width: var(--board-size);
 }
 
 .cell {
@@ -64,7 +74,7 @@ main {
 
 .set-cell, .definite-cell {
   color: var(--set-colour);
-  font-size: 2.9rem;
+  font-size: var(--large-text);
   text-align: center;
 }
 
@@ -86,7 +96,7 @@ main {
 .candidates {
   position: absolute;
   text-align: center;
-  top: calc(30px - 0.55rem);
+  top: calc((var(--board-size) / 2) - 0.55rem);
   width: 100%;
 }
 
@@ -162,15 +172,15 @@ main {
 
 .panel button {
   border-radius: 0.25em;
-  height: 4rem;
-  line-height: 4rem;
+  height: var(--button-size);
+  line-height: var(--button-size);
   text-align: center;
-  width: 4rem;
+  width: var(--button-size);
 }
 
 .panel .function-button {
-  font-size: 1.8rem;
-  width: 8rem;
+  font-size: var(--function-large-text);
+  width: var(--button-large);
 }
 
 .panel .mode-button.selected {
@@ -179,10 +189,39 @@ main {
 
 .panel .definite-button {
   color: black;
-  font-size: 2.5rem;
+  font-size: var(--button-large-text);
 }
 
 .panel .possibles-button {
   color: var(--possible-colour);
-  font-size: 1.4rem;
+  font-size: var(--button-small-text);
+}
+
+@media screen and (max-width: 960px) {
+  :root {
+      --board-size: 432px;
+      --large-text: 2rem;
+
+      --button-size: 3rem;
+      --button-large: 6rem;
+
+      --function-large-text: 1.4rem;
+      --button-large-text: 1.8rem;
+      --button-small-text: 1rem;
+  }
+
+  .panel-solve {
+    width: 18.5rem;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  main {
+    margin-left: 1rem;
+    flex-direction: column;
+  }
+
+  .panel {
+    margin-top: 1rem;
+  }
 }
