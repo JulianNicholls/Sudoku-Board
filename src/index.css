@@ -3,9 +3,13 @@
 :root {
   --set-colour: #101010;
   --definite-colour: #8000a0;
-  --possible-colour: #616161;
+  --possible-colour: #545454;
 
-  --selected-bg: #ffe1c4;
+  --selected-bg: #ffffb3;
+
+  --grey-border: #777;
+
+  --button-selected: #b3ffb3;
 }
 
 *, *::before, *::after {
@@ -24,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid var(--grey-border);
   margin-bottom: 1em;
 }
 
@@ -40,7 +44,7 @@ main {
 }
 
 .board {
-  border: 1px solid #777;
+  border: 1px solid var(--grey-border);
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
@@ -170,7 +174,7 @@ main {
 }
 
 .panel .mode-button.selected {
-  background: #d7f9d7;
+  background: var(--button-selected);
 }
 
 .panel .definite-button {
@@ -179,6 +183,6 @@ main {
 }
 
 .panel .possibles-button {
-  color: #616161;
+  color: var(--possible-colour);
   font-size: 1.4rem;
 }
