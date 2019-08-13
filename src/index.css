@@ -9,11 +9,13 @@
 
   --grey-border: #777;
 
-  --button-selected: #b3ffb3;
+  --button-bg: transparent;
+  --button-selected-bg: #b3ffb3;
 
   --board-size: 540px;
 
   --large-text: 2.9rem;
+  --small-text: 0.9rem;
 
   --button-size: 4rem;
   --button-large: 8rem;
@@ -84,7 +86,7 @@ main {
 
 .possible-numbers {
   color: var(--possible-colour);
-  font-size: 0.9rem;
+  font-size: var(--small-text);
 }
 
 .possibles {
@@ -172,6 +174,7 @@ main {
 
 .panel button {
   border-radius: 0.25em;
+  background: var(--button-bg);
   height: var(--button-size);
   line-height: var(--button-size);
   text-align: center;
@@ -184,15 +187,17 @@ main {
 }
 
 .panel .mode-button.selected {
-  background: var(--button-selected);
+  background: var(--button-selected-bg);
 }
 
 .panel .definite-button {
+  background: var(--button-selected-bg);
   color: black;
   font-size: var(--button-large-text);
 }
 
 .panel .possibles-button {
+  background: var(--button-selected-bg);
   color: var(--possible-colour);
   font-size: var(--button-small-text);
 }
@@ -201,6 +206,7 @@ main {
   :root {
       --board-size: 432px;
       --large-text: 2rem;
+      --small-text: 0.8rem;
 
       --button-size: 3rem;
       --button-large: 6rem;
