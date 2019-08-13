@@ -98,7 +98,7 @@ main {
 .candidates {
   position: absolute;
   text-align: center;
-  top: calc((var(--board-size) / 2) - 0.55rem);
+  top: calc((var(--board-size) / 18) - 0.55rem);
   width: 100%;
 }
 
