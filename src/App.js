@@ -22,8 +22,6 @@ const SolvePage = ({ match }) => {
       <Panel />
     </>
   );
-
-  // basic1 /
 };
 
 function App() {

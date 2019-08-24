@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather|Montserrat&display=swap');
+@import url('https://rsms.me/inter/inter.css');
 
 :root {
   --set-colour: #101010;
@@ -30,7 +31,7 @@
 
 body {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -200,6 +201,12 @@ main {
   background: var(--button-selected-bg);
   color: var(--possible-colour);
   font-size: var(--button-small-text);
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: 'Inter var', sans-serif;
+  }
 }
 
 @media screen and (max-width: 960px) {
