@@ -16,6 +16,19 @@ const NumberButton = ({ number }) => {
   );
 };
 
+const SetPanel = ({ save }) => {
+  const { SET } = useBoard();
+
+  return (
+    <div className = "panel-set" >
+      <ModeButton mode={SET} text={'Set'} />
+      <button className="function-button" onClick={save}>
+        Save
+      </button>
+    </div>
+  );
+};
+
 const Panel = ({ setMode = false }) => {
   const [boardID, setBoardID] = useState('');
 
@@ -39,14 +52,8 @@ const Panel = ({ setMode = false }) => {
 
   return (
     <div className="panel">
-      {setMode && (
-        <div className="panel-set">
-          <ModeButton mode={SET} text={'Set'} />
-          <button className="function-button" onClick={save}>
-            Save
-          </button>
-        </div>
-      )}
+      {setMode && <SetPanel save={save} />}
+
       <div className="panel-solve">
         {!setMode && (
           <>
