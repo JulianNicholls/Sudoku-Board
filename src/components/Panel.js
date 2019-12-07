@@ -20,8 +20,8 @@ const SetPanel = ({ save }) => {
   const { SET } = useBoard();
 
   return (
-    <div className = "panel-set" >
-      <ModeButton mode={SET} text={'Set'} />
+    <div className="panel-set">
+      <ModeButton mode={SET} text="Set" />
       <button className="function-button" onClick={save}>
         Save
       </button>
@@ -57,17 +57,17 @@ const Panel = ({ setMode = false }) => {
       <div className="panel-solve">
         {!setMode && (
           <>
-            <ModeButton mode={NORMAL} text={'Normal'} />
+            <ModeButton mode={NORMAL} text="Normal" />
             <NumberButton number={1} />
             <NumberButton number={2} />
             <NumberButton number={3} />
 
-            <ModeButton mode={POSSIBLES} text={'Corner'} />
+            <ModeButton mode={POSSIBLES} text="Corner" />
             <NumberButton number={4} />
             <NumberButton number={5} />
             <NumberButton number={6} />
 
-            <ModeButton mode={CANDIDATES} text={'Centre'} />
+            <ModeButton mode={CANDIDATES} text="Centre" />
             <NumberButton number={7} />
             <NumberButton number={8} />
             <NumberButton number={9} />

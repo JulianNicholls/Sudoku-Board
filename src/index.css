@@ -176,6 +176,7 @@ main {
 .panel button {
   border-radius: 0.25em;
   background: var(--button-bg);
+  cursor: pointer;
   height: var(--button-size);
   line-height: var(--button-size);
   text-align: center;
