@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 
 const BoardContext = React.createContext();
 
@@ -178,12 +179,18 @@ export const BoardProvider = ({ children }) => {
     return id;
   };
 
-  const loadBoard = id => {
-    const loaded = localStorage.getItem(`judoku-${id}`);
+  const loadBoard = async id => {
+    try {
+      const response = await axios.get(`/boards/${id}`);
 
-    if (loaded) {
-      console.log(`Loading ${id}`);
-      setBoard(JSON.parse(loaded));
+      if (response.data.length === 81) {
+        console.log(`Loaded ${id} OK`);
+        setBoard(response.data);
+      } else {
+        console.log({ data: response.data });
+      }
+    } catch (err) {
+      console.error(`Error loading ${id}:`, err);
     }
   };
 

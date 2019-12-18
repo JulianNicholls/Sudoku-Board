@@ -85,21 +85,24 @@ const defaultBoard = [
   { selected: false, set: '', definite: '', possibles: [], candidates: [] },
 ];
 
-/* GET board. */
-router.get('/:id', (_req, res) => {
-  res.json(defaultBoard);
-});
+module.exports = client => {
+  /* GET board. */
+  router.get('/:id', (req, res) => {
+    console.log('GET', req.params.id);
+    res.json(defaultBoard);
+  });
 
-router.post('/', (req, res) => {
-  const data = req.body;
+  router.post('/', (req, res) => {
+    const data = req.body;
 
-  res.json({ id: 'af78d7f8da9f797a0fdfd87fd45a4fd6' });
-});
+    res.json({ id: 'dfd87fd45a4fd6' });
+  });
 
-router.put('/:id', (req, res) => {
-  const data = req.body;
+  router.put('/:id', (req, res) => {
+    const data = req.body;
 
-  res.json({ ok: true });
-});
+    res.json({ updated: 1, ok: true });
+  });
 
-module.exports = router;
+  return router;
+};

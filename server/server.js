@@ -2,9 +2,8 @@ const express = require('express');
 const path = require('path');
 const { MongoClient } = require('mongodb');
 
-const apiRouter = require('./routes');
-
-const MONGODB_URI = 'mongodb://judoku:Judoku2019@ds113435.mlab.com:13435/judoku';
+const MONGODB_URI =
+  'mongodb+srv://mflixAppUser:mflixAppPwd@mflix-rwv9j.mongodb.net';
 
 const port = process.env.PORT || 3001;
 
@@ -16,14 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(publicPath));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
-});
-
-app.use('/boards', apiRouter);
-
 MongoClient.connect(MONGODB_URI, {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
   poolSize: 10,
   wtimeout: 2500,
 })
@@ -32,5 +26,16 @@ MongoClient.connect(MONGODB_URI, {
     process.exit(1);
   })
   .then(async client => {
-    app.listen(port, 'Judoku server listening on port', port);
+    const apiRouter = require('./routes')(client);
+
+    app.use('/boards', apiRouter);
+
+    app.get('*', (req, res) => {
+      console.log('Sending default');
+      res.sendFile(path.join(publicPath, 'index.html'));
+    });
+
+    app.listen(port, () => {
+      console.log('Judoku server listening on port', port);
+    });
   });
