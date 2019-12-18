@@ -168,15 +168,15 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
-  const saveBoard = (boardID = '') => {
-    let id = boardID;
+  const saveBoard = async (boardID = '') => {
+    try {
+      const response = await axios.post(`/boards`, { date: board });
 
-    if (!id) id = Date.now().toString(16);
-
-    console.log(`Saving ${id}`);
-    localStorage.setItem(`judoku-${id}`, JSON.stringify(board));
-
-    return id;
+      console.log(response);
+      return boardID || Date.now().toString(16);
+    } catch (err) {
+      console.error(`Error saving`, err);
+    }
   };
 
   const loadBoard = async id => {

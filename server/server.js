@@ -2,8 +2,7 @@ const express = require('express');
 const path = require('path');
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI =
-  'mongodb+srv://mflixAppUser:mflixAppPwd@mflix-rwv9j.mongodb.net';
+const MONGODB_URI = 'mongodb+srv://judoku:m316cw@mflix-rwv9j.mongodb.net';
 
 const port = process.env.PORT || 3001;
 

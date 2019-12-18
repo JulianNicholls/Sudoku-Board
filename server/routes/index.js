@@ -1,105 +1,55 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const { ObjectId } = require('bson');
 
-const defaultBoard = [
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '6', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '8', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '9', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '4', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '1', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '2', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '2', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '6', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '5', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '5', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '7', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '9', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '1', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '9', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '6', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '7', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '8', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '1', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '2', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '9', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '5', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '8', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '9', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '5', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '6', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '1', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '4', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '3', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: true, set: '2', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-  { selected: false, set: '', definite: '', possibles: [], candidates: [] },
-];
+const router = express.Router();
+
+let boards;
+
+const connect = async client => {
+  try {
+    console.log('Connecting to judoku db');
+    const judoku = await client.db('judoku');
+
+    console.log('Connecting to boards collection');
+    boards = await judoku.collection('boards');
+  } catch (err) {
+    console.error('Cannot connect to db:', err);
+  }
+};
 
 module.exports = client => {
+  connect(client);
+
   /* GET board. */
-  router.get('/:id', (req, res) => {
+  router.get('/:id', async (req, res) => {
     console.log('GET', req.params.id);
-    res.json(defaultBoard);
+    try {
+      const cursor = boards.find({ _id: ObjectId(req.params.id) });
+      const board = await cursor.toArray();
+      // console.log(board[0]._id);
+      res.json(board[0].cells);
+    } catch (err) {
+      console.error('Cannot load board', err);
+      res.json({ ok: false });
+    }
   });
 
-  router.post('/', (req, res) => {
+  router.post('/', async (req, res) => {
     const data = req.body;
 
-    res.json({ id: 'dfd87fd45a4fd6' });
+    try {
+      const response = await boards.insertOne({ cells: data });
+
+      console.log({ response });
+      res.json({ ok: true });
+    } catch (err) {
+      console.error('Cannot add board', err);
+      res.json({ ok: false });
+    }
   });
 
   router.put('/:id', (req, res) => {
-    const data = req.body;
+    // const data = req.body;
 
     res.json({ updated: 1, ok: true });
   });
