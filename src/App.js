@@ -35,7 +35,7 @@ function App() {
       <Router>
         <main>
           <Route path="/" exact component={SetPage} />
-          <Route path="/boards/:id" component={SolvePage} />
+          <Route path="/board/:id" component={SolvePage} />
         </main>
       </Router>
     </div>
