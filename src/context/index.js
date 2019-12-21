@@ -55,6 +55,7 @@ export const BoardProvider = ({ children }) => {
   };
 
   const setSelected = (index, addToSelection) => {
+    if (index < 0 || index > 81) console.log('Huh? Index =', index);
     const newBoard = board.slice(0);
 
     // Clear the current selection unless adding to it.
@@ -170,10 +171,10 @@ export const BoardProvider = ({ children }) => {
 
   const saveBoard = async (boardID = '') => {
     try {
-      const response = await axios.post(`/boards`, { date: board });
+      const response = await axios.post(`/boards`, { board });
 
       console.log(response);
-      return boardID || Date.now().toString(16);
+      return response.data.id;
     } catch (err) {
       console.error(`Error saving`, err);
     }
