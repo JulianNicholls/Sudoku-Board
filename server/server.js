@@ -30,7 +30,6 @@ MongoClient.connect(MONGODB_URI, {
     app.use('/boards', apiRouter);
 
     app.get('*', (req, res) => {
-      console.log('Sending default');
       res.sendFile(path.join(publicPath, 'index.html'));
     });
 

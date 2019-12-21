@@ -22,7 +22,7 @@ module.exports = client => {
 
   /* GET board. */
   router.get('/:id', async (req, res) => {
-    console.log('GET', req.params.id);
+    // console.log('GET', req.params.id);
     try {
       const cursor = boards.find({ _id: ObjectId(req.params.id) });
       const board = await cursor.toArray();
@@ -35,21 +35,20 @@ module.exports = client => {
   });
 
   router.post('/', async (req, res) => {
-    const data = req.body;
+    const { board } = req.body;
 
     try {
-      const response = await boards.insertOne({ cells: data });
+      const response = await boards.insertOne({ cells: board });
 
-      console.log({ response });
-      res.json({ ok: true });
+      res.json({ id: response.insertedId });
     } catch (err) {
       console.error('Cannot add board', err);
-      res.json({ ok: false });
+      res.status(422).json({ ok: false });
     }
   });
 
   router.put('/:id', (req, res) => {
-    // const data = req.body;
+    // const { board } = req.body;
 
     res.json({ updated: 1, ok: true });
   });
