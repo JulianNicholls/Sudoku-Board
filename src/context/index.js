@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
+const goodSolutions = ['Looks good to me', "That's fine"];
+const badSolutions = ['Oops, not quite right', "I don't think that's it"];
+
 const BoardContext = React.createContext();
 
 const NORMAL = 0;
@@ -195,6 +198,46 @@ export const BoardProvider = ({ children }) => {
     }
   };
 
+  const number = cell => (cell.set ? cell.set : cell.definite);
+
+  const checkSolution = () => {
+    const solutionIndex = Math.floor(Math.random() * goodSolutions.length);
+    let ok = true;
+    let rows = [];
+    let cols = [];
+
+    for (let row = 0; row < 81; row += 9) {
+      const cells = board.slice(row, row + 9).map(cell => number(cell));
+      rows.push(new Set(cells));
+    }
+
+    for (let col = 0; col < 9; ++col) {
+      const cells = [];
+      for (let row = col; row < 81; row += 9) {
+        cells.push(number(board[row]));
+      }
+
+      cols.push(new Set(cells));
+    }
+
+    for (let i = 0; i < 9; ++i) {
+      if (rows[i].length !== 9 || rows[i].includes('')) {
+        console.log(`Row ${i}:`, rows[i]);
+        ok = false;
+        break;
+      }
+
+      if (cols[i].length !== 9 || cols[i].includes('')) {
+        console.log(`Col ${i}:`, cols[i]);
+        ok = false;
+        break;
+      }
+    }
+
+    if (ok) alert(goodSolutions[solutionIndex]);
+    else alert(badSolutions[solutionIndex]);
+  };
+
   const getSelections = () => {
     const selections = board.reduce((indexes, cell, idx) => {
       if (cell.selected) indexes.push(idx);
@@ -224,6 +267,7 @@ export const BoardProvider = ({ children }) => {
     emptyCell,
     saveBoard,
     loadBoard,
+    checkSolution,
   };
 
   return <BoardContext.Provider value={state}>{children}</BoardContext.Provider>;

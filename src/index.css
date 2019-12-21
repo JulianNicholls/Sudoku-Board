@@ -3,8 +3,8 @@
 
 :root {
   --set-colour: #101010;
-  --definite-colour: #8000a0;
-  --possible-colour: #545454;
+  --definite-colour: #700090;
+  --possible-colour: #444444;
 
   --selected-bg: #ffffb3;
 
@@ -186,6 +186,10 @@ main {
 .panel .function-button {
   font-size: var(--function-large-text);
   width: var(--button-large);
+}
+
+.panel .function-button.double {
+  grid-column: span 2;
 }
 
 .panel .mode-button.selected {

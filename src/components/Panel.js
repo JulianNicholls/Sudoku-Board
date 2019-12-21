@@ -40,6 +40,7 @@ const Panel = ({ setMode = false }) => {
     setEntryMode,
     emptyCell,
     saveBoard,
+    checkSolution,
   } = useBoard();
 
   useEffect(() => {
@@ -75,6 +76,9 @@ const Panel = ({ setMode = false }) => {
         )}
         <button className="function-button" onClick={emptyCell}>
           Delete
+        </button>
+        <button className="function-button double" onClick={checkSolution}>
+          Check
         </button>
       </div>
     </div>
