@@ -1,8 +1,19 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
-const goodSolutions = ['Looks good to me', "That's fine"];
-const badSolutions = ['Oops, not quite right', "I don't think that's it"];
+const goodSolutions = [
+  'It looks good to me',
+  "That's fine",
+  'Well done, it looks right',
+];
+const badSolutions = [
+  'Oops, not quite right',
+  "I don't think that's it",
+  "I think there's been a slip up",
+];
+
+const blockOffsets = [0, 1, 2, 9, 10, 11, 18, 19, 20];
+const blockStarts = [0, 3, 6, 27, 30, 33, 54, 57, 60];
 
 const BoardContext = React.createContext();
 
@@ -205,30 +216,48 @@ export const BoardProvider = ({ children }) => {
     let ok = true;
     let rows = [];
     let cols = [];
+    let blocks = [];
 
     for (let row = 0; row < 81; row += 9) {
       const cells = board.slice(row, row + 9).map(cell => number(cell));
+
       rows.push(new Set(cells));
     }
 
     for (let col = 0; col < 9; ++col) {
-      const cells = [];
+      let cells = [];
       for (let row = col; row < 81; row += 9) {
         cells.push(number(board[row]));
       }
 
       cols.push(new Set(cells));
+
+      cells = blockOffsets.reduce((acc, offset) => {
+        acc.push(number(board[blockStarts[col] + offset]));
+
+        return acc;
+      }, []);
+
+      blocks.push(new Set(cells));
     }
 
+    console.log('blocks[0]', blocks[0]);
+
     for (let i = 0; i < 9; ++i) {
-      if (rows[i].length !== 9 || rows[i].includes('')) {
-        console.log(`Row ${i}:`, rows[i]);
+      if (rows[i].size !== 9 || rows[i].has('')) {
+        console.log(`Row ${i}:`, rows[i], rows[i].size);
         ok = false;
         break;
       }
 
-      if (cols[i].length !== 9 || cols[i].includes('')) {
-        console.log(`Col ${i}:`, cols[i]);
+      if (cols[i].size !== 9 || cols[i].has('')) {
+        console.log(`Col ${i}:`, cols[i], cols[i].size);
+        ok = false;
+        break;
+      }
+
+      if (blocks[i].size !== 9 || blocks[i].has('')) {
+        console.log(`Col ${i}:`, blocks[i], blocks[i].size);
         ok = false;
         break;
       }
