@@ -20,11 +20,11 @@ MongoClient.connect(MONGODB_URI, {
   poolSize: 10,
   wtimeout: 2500,
 })
-  .catch(err => {
+  .catch((err) => {
     console.error(err.stack);
     process.exit(1);
   })
-  .then(async client => {
+  .then(async (client) => {
     const apiRouter = require('./routes')(client);
 
     app.use('/boards', apiRouter);
