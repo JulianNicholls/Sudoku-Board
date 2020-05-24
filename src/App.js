@@ -36,8 +36,6 @@ const NotFound = () => {
   if (params[0].length === 25)
     return <Redirect to={{ pathname: `/board/${params[0].slice(1)}` }} />;
 
-  console.log({ params, p0: params[0] });
-
   return <h2>Not Found</h2>;
 };
 

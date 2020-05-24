@@ -6,6 +6,7 @@ const goodSolutions = [
   "That's fine",
   'Well done, it looks right',
 ];
+
 const badSolutions = [
   'Oops, not quite right',
   "I don't think that's it",
@@ -44,7 +45,7 @@ export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState(EMPTY_BOARD);
   const [entryMode, setEntryMode] = useState(NORMAL);
 
-  const keyDownHandler = e => {
+  const keyDownHandler = (e) => {
     const selections = getSelections();
     const selection = selections[0]; // Ignore other selections
     const newBoard = board.slice(0);
@@ -59,7 +60,7 @@ export const BoardProvider = ({ children }) => {
       else if (key === 'ArrowLeft' && selection % 9 !== 0) delta = -1;
 
       if (delta) {
-        newBoard.forEach(cell => (cell.selected = false));
+        newBoard.forEach((cell) => (cell.selected = false));
         newBoard[selection + delta].selected = true;
         setBoard(newBoard);
       }
@@ -74,7 +75,7 @@ export const BoardProvider = ({ children }) => {
 
     // Clear the current selection unless adding to it.
     // Then toggle the selected cell
-    if (!addToSelection) newBoard.forEach(cell => (cell.selected = false));
+    if (!addToSelection) newBoard.forEach((cell) => (cell.selected = false));
 
     newBoard[index].selected = !newBoard[index].selected;
 
@@ -84,7 +85,7 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
-  const setNumber = e => {
+  const setNumber = (e) => {
     const value = e.target ? e.target.innerText : e;
 
     switch (entryMode) {
@@ -109,34 +110,34 @@ export const BoardProvider = ({ children }) => {
     }
   };
 
-  const setInitial = value => {
+  const setInitial = (value) => {
     const selection = getSelections();
     const newBoard = board.slice(0);
 
     selection.forEach(
-      idx => (newBoard[idx].set = newBoard[idx].set === value ? '' : value)
+      (idx) => (newBoard[idx].set = newBoard[idx].set === value ? '' : value)
     );
 
     setBoard(newBoard);
   };
 
-  const setDefinite = value => {
+  const setDefinite = (value) => {
     const selection = getSelections();
     const newBoard = board.slice(0);
 
     selection.forEach(
-      idx =>
+      (idx) =>
         (newBoard[idx].definite = newBoard[idx].definite === value ? '' : value)
     );
 
     setBoard(newBoard);
   };
 
-  const setPossibles = value => {
+  const setPossibles = (value) => {
     const selection = getSelections();
     const newBoard = board.slice(0);
 
-    selection.forEach(index => {
+    selection.forEach((index) => {
       const cell = newBoard[index];
       const idx = cell.possibles.indexOf(value);
 
@@ -149,11 +150,11 @@ export const BoardProvider = ({ children }) => {
     setBoard(newBoard);
   };
 
-  const setCandidates = value => {
+  const setCandidates = (value) => {
     const selection = getSelections();
     const newBoard = board.slice(0);
 
-    selection.forEach(index => {
+    selection.forEach((index) => {
       const cell = newBoard[index];
       const idx = cell.candidates.indexOf(value);
 
@@ -170,7 +171,7 @@ export const BoardProvider = ({ children }) => {
     const selection = getSelections();
     const newBoard = board.slice(0);
 
-    selection.forEach(index => {
+    selection.forEach((index) => {
       newBoard[index] = {
         ...newBoard[index],
         set: '',
@@ -194,7 +195,7 @@ export const BoardProvider = ({ children }) => {
     }
   };
 
-  const loadBoard = async id => {
+  const loadBoard = async (id) => {
     try {
       const response = await axios.get(`/boards/${id}`);
 
@@ -202,14 +203,14 @@ export const BoardProvider = ({ children }) => {
         console.log(`Loaded ${id} OK`);
         setBoard(response.data);
       } else {
-        console.log({ data: response.data });
+        console.log('Weird!', { data: response.data });
       }
     } catch (err) {
       console.error(`Error loading ${id}:`, err);
     }
   };
 
-  const number = cell => (cell.set ? cell.set : cell.definite);
+  const number = (cell) => (cell.set ? cell.set : cell.definite);
 
   const checkSolution = () => {
     const solutionIndex = Math.floor(Math.random() * goodSolutions.length);
@@ -219,7 +220,7 @@ export const BoardProvider = ({ children }) => {
     let blocks = [];
 
     for (let row = 0; row < 81; row += 9) {
-      const cells = board.slice(row, row + 9).map(cell => number(cell));
+      const cells = board.slice(row, row + 9).map((cell) => number(cell));
 
       rows.push(new Set(cells));
     }
