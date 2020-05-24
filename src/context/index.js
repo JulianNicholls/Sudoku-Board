@@ -27,7 +27,7 @@ const MAX_MODE = 3;
 const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 const NUMERALS = '123456789';
 
-const EMPTY_BOARD = [];
+const EMPTY_BOARD = new Array(81);
 
 for (let i = 0; i < 81; ++i) {
   EMPTY_BOARD[i] = {
@@ -46,10 +46,10 @@ export const BoardProvider = ({ children }) => {
   const [entryMode, setEntryMode] = useState(NORMAL);
 
   const keyDownHandler = (e) => {
+    const { key } = e;
     const selections = getSelections();
     const selection = selections[0]; // Ignore other selections
     const newBoard = board.slice(0);
-    const key = e.key;
 
     if (ARROWS.includes(key)) {
       let delta = 0;
@@ -199,12 +199,8 @@ export const BoardProvider = ({ children }) => {
     try {
       const response = await axios.get(`/boards/${id}`);
 
-      if (response.data.length === 81) {
-        console.log(`Loaded ${id} OK`);
-        setBoard(response.data);
-      } else {
-        console.log('Weird!', { data: response.data });
-      }
+      if (response.data.length === 81) setBoard(response.data);
+      else console.log('Weird!', { data: response.data });
     } catch (err) {
       console.error(`Error loading ${id}:`, err);
     }
@@ -241,8 +237,6 @@ export const BoardProvider = ({ children }) => {
 
       blocks.push(new Set(cells));
     }
-
-    console.log('blocks[0]', blocks[0]);
 
     for (let i = 0; i < 9; ++i) {
       if (rows[i].size !== 9 || rows[i].has('')) {
